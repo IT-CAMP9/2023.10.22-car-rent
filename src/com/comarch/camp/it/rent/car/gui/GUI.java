@@ -1,27 +1,32 @@
+package com.comarch.camp.it.rent.car.gui;
+
+import com.comarch.camp.it.rent.car.model.Car;
+
 import java.util.Scanner;
 
 public class GUI {
     Scanner scanner = new Scanner(System.in);
 
-    String showMenuAndReadChoose() {
+    public String showMenuAndReadChoose() {
         System.out.println("1. List cars");
         System.out.println("2. Rent car");
-        System.out.println("3. Exit");
+        System.out.println("3. Return car");
+        System.out.println("4. Exit");
         return this.scanner.nextLine();
     }
 
-    void printCars(Car[] cars) {
+    public void printCars(Car[] cars) {
         for(Car car : cars) {
             System.out.println(car.transformToString());
         }
     }
 
-    String readPlate() {
+    public String readPlate() {
         System.out.println("Enter plate:");
         return this.scanner.nextLine();
     }
 
-    void showRentResult(boolean rentResult) {
+    public void showResult(boolean rentResult) {
         if(rentResult) {
             System.out.println("Success !!");
         } else {
@@ -29,7 +34,7 @@ public class GUI {
         }
     }
 
-    void showWrongChoose() {
+    public void showWrongChoose() {
         System.out.println("Wrong choose !!");
     }
 }

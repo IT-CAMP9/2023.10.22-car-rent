@@ -1,3 +1,8 @@
+package com.comarch.camp.it.rent.car;
+
+import com.comarch.camp.it.rent.car.db.CarRepository;
+import com.comarch.camp.it.rent.car.gui.GUI;
+
 public class App {
     public static void main(String[] args) {
         CarRepository baza = new CarRepository();
@@ -6,12 +11,15 @@ public class App {
         while(run) {
             switch(gui.showMenuAndReadChoose()) {
                 case "1":
-                    gui.printCars(baza.cars);
+                    gui.printCars(baza.getCars());
                     break;
                 case "2":
-                    gui.showRentResult(baza.rentCar(gui.readPlate()));
+                    gui.showResult(baza.rentCar(gui.readPlate()));
                     break;
                 case "3":
+                    gui.showResult(baza.returnCar(gui.readPlate()));
+                    break;
+                case "4":
                     //System.exit(0);
                     run = false;
                     break;
