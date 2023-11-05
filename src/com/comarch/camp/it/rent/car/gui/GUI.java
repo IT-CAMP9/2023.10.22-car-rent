@@ -1,32 +1,38 @@
 package com.comarch.camp.it.rent.car.gui;
 
-import com.comarch.camp.it.rent.car.model.Car;
+import com.comarch.camp.it.rent.car.authenticate.Authenticator;
+import com.comarch.camp.it.rent.car.model.LuxuryCar;
+import com.comarch.camp.it.rent.car.model.User;
+import com.comarch.camp.it.rent.car.model.Vehicle;
 
 import java.util.Scanner;
 
 public class GUI {
-    Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public String showMenuAndReadChoose() {
+    public static String showMenuAndReadChoose() {
         System.out.println("1. List cars");
         System.out.println("2. Rent car");
         System.out.println("3. Return car");
         System.out.println("4. Exit");
-        return this.scanner.nextLine();
+        return scanner.nextLine();
     }
 
-    public void printCars(Car[] cars) {
-        for(Car car : cars) {
-            System.out.println(car.transformToString());
+    public static void printVehicles(Vehicle[] vehicles) {
+        for(Vehicle vehicle : vehicles) {
+            if(vehicle instanceof LuxuryCar && !"ADMIN".equals(Authenticator.loggedUserRole)) {
+                continue;
+            }
+            System.out.println(vehicle);
         }
     }
 
-    public String readPlate() {
+    public static String readPlate() {
         System.out.println("Enter plate:");
-        return this.scanner.nextLine();
+        return scanner.nextLine();
     }
 
-    public void showResult(boolean rentResult) {
+    public static void showResult(boolean rentResult) {
         if(rentResult) {
             System.out.println("Success !!");
         } else {
@@ -34,7 +40,14 @@ public class GUI {
         }
     }
 
-    public void showWrongChoose() {
+    public static void showWrongChoose() {
         System.out.println("Wrong choose !!");
+    }
+
+    public static User readLoginData() {
+        System.out.println("Login:");
+        String login = scanner.nextLine();
+        System.out.println("Password:");
+        return new User(login, scanner.nextLine());
     }
 }

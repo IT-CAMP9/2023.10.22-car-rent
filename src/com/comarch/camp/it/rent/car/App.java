@@ -1,30 +1,41 @@
 package com.comarch.camp.it.rent.car;
 
-import com.comarch.camp.it.rent.car.db.CarRepository;
+import com.comarch.camp.it.rent.car.authenticate.Authenticator;
+import com.comarch.camp.it.rent.car.db.VehicleRepository;
 import com.comarch.camp.it.rent.car.gui.GUI;
+import com.comarch.camp.it.rent.car.model.User;
 
 public class App {
     public static void main(String[] args) {
-        CarRepository baza = new CarRepository();
-        GUI gui = new GUI();
-        boolean run = true;
+        final VehicleRepository baza = new VehicleRepository();
+        final Authenticator authenticator = new Authenticator();
+        boolean run = false;
+        for(int i = 0; i < 3; i++) {
+            User user = GUI.readLoginData();
+            boolean authResult = authenticator.authenticate(user.getLogin(), user.getPassword());
+            if(authResult) {
+                System.out.println("Logged !!");
+                run = true;
+                break;
+            }
+            System.out.println("Incorrect login data !!");
+        }
         while(run) {
-            switch(gui.showMenuAndReadChoose()) {
+            switch(GUI.showMenuAndReadChoose()) {
                 case "1":
-                    gui.printCars(baza.getCars());
+                    GUI.printVehicles(baza.getVehicles());
                     break;
                 case "2":
-                    gui.showResult(baza.rentCar(gui.readPlate()));
+                    GUI.showResult(baza.rentVehicle(GUI.readPlate()));
                     break;
                 case "3":
-                    gui.showResult(baza.returnCar(gui.readPlate()));
+                    GUI.showResult(baza.returnVehicle(GUI.readPlate()));
                     break;
                 case "4":
-                    //System.exit(0);
                     run = false;
                     break;
                 default:
-                    gui.showWrongChoose();
+                    GUI.showWrongChoose();
                     break;
             }
         }
